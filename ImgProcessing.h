@@ -42,7 +42,7 @@ private:
 
      //get points and draw them
     void cleanLines(unsigned int limit=2);
-    void getBiffurcations();
+    void getCriticPoints(int n, int m);
     vector<point> getNeighbors(point &current, vector<vector<pixel>> &pixels);
     bool criticPointExists(point p);
 
@@ -63,7 +63,7 @@ public:
     void getSkeleton(vector<vector<pixel>> &pixels);
 
     //get points and draw them
-    void getPoints(vector<vector<pixel>> &pixels);
+    void getPoints(vector<vector<pixel>> &pixels, unsigned int cleanLimit=2);
     void drawLines(vector<vector<pixel>> &pixels);
     void printLines();
     vector<vector<pixel>> getPixelsMatrix(char code, int n, int m);        //code = 'O' -> original; 'S' splines

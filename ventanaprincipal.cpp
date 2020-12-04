@@ -27,7 +27,7 @@ int exec(double epsilon, bool visAlgh) {
     PGMImage image(path);
     ImgProcessing imgP;
     imgP.getSkeleton(image.pixels);
-    imgP.getPoints(image.pixels);
+    imgP.getPoints(image.pixels, 5);
     imgP.printLines();
 
     // decimate lines
@@ -105,7 +105,12 @@ VentanaPrincipal::~VentanaPrincipal()
 void VentanaPrincipal::on_loadButton_clicked()
 {
     QFileDialog *qf = new QFileDialog(this);
-    path = qf->getOpenFileName().toLocal8Bit().constData();
+    QString qpath = qf->getOpenFileName();
+    if (qpath.compare("")!=0){
+        path = qpath.toLocal8Bit().constData();
+        qpath = "LOAD: " + qpath;
+        ui->path_lb->setText(qpath);
+    }
 }
 
 void VentanaPrincipal::on_startButton_clicked()

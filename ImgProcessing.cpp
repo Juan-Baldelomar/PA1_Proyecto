@@ -238,7 +238,7 @@ vector<vector<pixel>> ImgProcessing::getPixelsMatrix(char code, int n, int m){
     return pixels;
 }
 
-void ImgProcessing::getPoints(vector<vector<pixel>> &pixels) {
+void ImgProcessing::getPoints(vector<vector<pixel>> &pixels, unsigned int cleanLimit) {
     int n = pixels.size(), m = 0;
     if (n>0) m = pixels[0].size();
 
@@ -286,8 +286,8 @@ void ImgProcessing::getPoints(vector<vector<pixel>> &pixels) {
         } // for j
     }  // for i
 
-    cleanLines(2);            // clean noise lines
-    getBiffurcations();      // get Biffurcations after cleaning noise lines
+    cleanLines(cleanLimit);            // clean noise lines
+    getCriticPoints(n, m);      // get Biffurcations after cleaning noise lines
 }
 
 // get neighbors from current point that have a value of 255
@@ -299,6 +299,9 @@ vector<point> ImgProcessing::getNeighbors(point &current, vector<vector<pixel>> 
     // review 8_neighbors
     for (int i = -1; i<=1; i++){
         for (int j = -1; j<=1; j++){
+            if (i==0 && j==0)
+                continue;
+
             if (i + current.x >= 0 && i + current.x < n && j + current.y >= 0 && j + current.y < m
                 && pixels[i + current.x][j + current.y] == 255){
 
@@ -322,11 +325,22 @@ void ImgProcessing::cleanLines(unsigned int limit) {
 }
 
 //get critic points
-void ImgProcessing::getBiffurcations(){
-    int n = lines.size();
-    for (int i = 0; i<n; i++){
-        if (!criticPointExists(lines[i][0]))     criticPoints.push_back(lines[i][0]);
-        if (!criticPointExists(lines[i].back())) criticPoints.push_back(lines[i].back());
+void ImgProcessing::getCriticPoints(int n, int m){
+    vector<vector<pixel>> pixels(n, vector<pixel>(m, 0));
+    for (line l : lines)
+        for (point p: l)
+            pixels[p.x][p.y] =255;
+
+
+
+    for (line l : lines){
+        point start, end;
+        start = l[0]; end = l.back();
+        vector<point> startNeighbors =  getNeighbors(start, pixels);
+        vector<point> endNeighbors =  getNeighbors(end, pixels);
+
+        if (!criticPointExists(start) && (startNeighbors.size() == 1 || startNeighbors.size() > 2 ))     criticPoints.push_back(start);
+        if (!criticPointExists(end) && (endNeighbors.size() == 1 || endNeighbors.size() > 2 ))     criticPoints.push_back(end);
     }
 }
 
