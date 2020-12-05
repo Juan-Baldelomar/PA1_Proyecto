@@ -28,9 +28,6 @@
 using namespace std;
 typedef unsigned char pixel ;
 
-//void createGrid(double width, double height);
-void graficarRegion(double a, double b, double (*f)(double));
-void graficarRegion_L(vector<double>&time, vector<double>& error);
 void generateGraphics(vector<vector<pixel>> &pixels, vector<vector<pixel>> &originalPixels, vector<point> &biffPoints);
 #endif /* GRAFICADORA_H */
 

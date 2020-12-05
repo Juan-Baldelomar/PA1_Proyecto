@@ -377,7 +377,7 @@ void ImgProcessing::DecimateLines(double epsilon) {
     int n = lines.size();
     originalLines.clear();
     for (int i = 0; i<n; i++){
-        originalLines.push_back(lines[i]);
+        originalLines.push_back(lines[i]);           // store original lines to draw them later
         if (lines[i].size()>1){
             line l = DouglasPeucker(lines[i], epsilon);
             lines[i].clear();
@@ -391,7 +391,7 @@ void ImgProcessing::DecimateVisvalingam(double epsilon){
     int n = lines.size();
     originalLines.clear();
     for (int i = 0; i<n; i++){
-        originalLines.push_back(lines[i]);
+        originalLines.push_back(lines[i]);          // store original lines to draw them later
         if (lines[i].size()>1){
             visvalingam(lines[i], epsilon);
         }

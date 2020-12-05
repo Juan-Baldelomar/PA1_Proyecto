@@ -10,7 +10,6 @@
 #include <queue>
 #include "Splines.h"
 #include "point.h"
-#include "LinearSpline.h"
 
 using namespace std;
 

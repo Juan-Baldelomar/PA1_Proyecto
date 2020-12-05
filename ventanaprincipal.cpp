@@ -64,14 +64,14 @@ int exec(double epsilon, bool visAlgh) {
         ss << imgP.errors[i]; ss >> num; ss.clear();
         ss << i + 1 ; ss >> pos; ss.clear();
 
-        strout+= "error segmento " + pos + ": " + num + "\n";
+        strout+= "error segmento " + pos + ":\t" + num + "\n";
     }
 
     ss << max; ss >> maxstr; ss.clear();
     ss << avg/imgP.errors.size(); ss >> avgstr; ss.clear();
 
-    strout+= "ERROR PROMEDIO: " + avgstr + "\n";
-    strout+= "ERROR MAXIMO: " + maxstr + "\n";
+    strout+= "ERROR PROMEDIO:\t" + avgstr + "\n";
+    strout+= "ERROR MAXIMO:\t" + maxstr + "\n";
 
     output->setText(QString::fromStdString(strout));
 
